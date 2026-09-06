@@ -1,0 +1,27 @@
+# JavaScript dependencies and generated frontend output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Rust/Tauri build output
+src-tauri/target/
+.cargo-target-clean/
+
+# Local packages and release artifacts
+release/
+EyeCare-Portable/
+EyeCare-Portable.zip
+
+# Local UI-test captures
+/*.png
+screen-test*.png
+window-*.png
+actual-*.png
+native-titlebar*.png
+ui-main.png
+
+# Windows special file
+nul
+
+# Local Codex planning notes
+.zcode/
