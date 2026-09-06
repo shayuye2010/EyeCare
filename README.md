@@ -2,6 +2,10 @@
 
 一个 Windows 优先的绿色版护眼桌面小程序。界面基于 `C:\Users\Administrator\Desktop\eyecare_app_prototype.html` 重构，前端完全离线，不依赖 CDN。
 
+## 许可证
+
+本项目采用 **GNU General Public License v3.0-only (GPL-3.0-only)** 开源。完整协议文本见 [LICENSE](LICENSE)。
+
 ## 开发
 
 环境要求：Node.js 20+、Rust stable、Windows WebView2 Runtime。
