@@ -1,5 +1,9 @@
 # EyeCare 亮睛睛
 
+> 申报版本：EyeCare 亮睛睛护眼提醒软件 V1.0
+>
+> 著作权人：`[请填写个人姓名或公司全称]`
+
 一个开源、免费的 Windows 护眼提醒桌面程序，帮助你按 20-20-20 规则定时休息眼睛。它支持托盘运行、番茄护眼、自定义计时，以及倒计时结束后的人工确认休息遮挡。
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
@@ -82,6 +86,10 @@ Tauri 默认会生成 NSIS 安装包。绿色版可使用 `src-tauri/target/rele
 ## 许可证
 
 本项目采用 **GNU General Public License v3.0-only (GPL-3.0-only)** 开源，完整协议见 [LICENSE](LICENSE)。
+
+## 软件著作权申报
+
+本项目已整理软件著作权申报初稿，见 [docs/software-description.md](docs/software-description.md) 和 [docs/software-copyright-checklist.md](docs/software-copyright-checklist.md)。申报时请以实际申请人、开发完成日期和提交版本为准，并确认第三方依赖、图标、字体及音效的授权情况。
 
 ## 反馈与贡献
 
