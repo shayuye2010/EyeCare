@@ -15,6 +15,9 @@ EyeCare-Portable.zip
 
 # Local UI-test captures
 /*.png
+!/docs/
+!/docs/screenshots/
+!/docs/screenshots/*.png
 screen-test*.png
 window-*.png
 actual-*.png

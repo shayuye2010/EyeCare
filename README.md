@@ -1,45 +1,88 @@
 # EyeCare 亮睛睛
 
-一个 Windows 优先的绿色版护眼桌面小程序。界面基于 `C:\Users\Administrator\Desktop\eyecare_app_prototype.html` 重构，前端完全离线，不依赖 CDN。
+一个开源、免费的 Windows 护眼提醒桌面程序，帮助你按 20-20-20 规则定时休息眼睛。它支持托盘运行、番茄护眼、自定义计时，以及倒计时结束后的人工确认休息遮挡。
 
-## 许可证
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/shayuye2010/EyeCare?display_name=tag)](https://github.com/shayuye2010/EyeCare/releases/latest)
+[![GitHub Stars](https://img.shields.io/github/stars/shayuye2010/EyeCare?style=flat)](https://github.com/shayuye2010/EyeCare/stargazers)
 
-本项目采用 **GNU General Public License v3.0-only (GPL-3.0-only)** 开源。完整协议文本见 [LICENSE](LICENSE)。
+## 下载
+
+普通用户不需要安装 Node.js、Rust 或开发工具。下载绿色版，解压后运行 `EyeCare.exe`：
+
+**[下载 Windows 绿色版](https://github.com/shayuye2010/EyeCare/releases/latest/download/EyeCare-Portable.zip)**
+
+运行要求：
+
+- Windows 10/11
+- Windows WebView2 Runtime
+- 不需要管理员权限
+- 不需要 Node.js
+
+如果电脑没有 WebView2，请从微软安装 [WebView2 Runtime](https://developer.microsoft.com/microsoft-edge/webview2/)。
+
+## 功能
+
+- 20-20-20 护眼模式：每 20 分钟提醒看向约 6 米外至少 20 秒
+- 番茄护眼模式和自定义 1–180 分钟计时
+- 倒计时结束自动恢复界面并明确提示休息
+- 手动点击“立即开始休息”即可马上进入休息界面
+- 休息提醒不会自动关闭，需要用户手动操作
+- 休息遮挡至少持续 1 分钟，之后才允许完成或关闭
+- 托盘运行、隐藏、恢复和退出
+- 最小化、原生关闭按钮和单实例运行
+- 多显示器桌面提醒与全屏应用避让
+- 设置、统计、键盘 Escape 和减少动效支持
+
+## 界面预览
+
+### 主界面
+
+![EyeCare 主界面](docs/screenshots/main-window.png)
+
+### 休息遮挡
+
+![EyeCare 休息遮挡界面](docs/screenshots/rest-overlay.png)
+
+休息界面会显示剩余时间，完成和关闭操作在至少 1 分钟后才会启用。
+
+### 休息后返回
+
+![EyeCare 返回主界面](docs/screenshots/rest-complete.png)
 
 ## 开发
+
+本项目使用网页技术构建界面，并通过 Tauri 打包为 Windows 桌面程序。Node.js 只用于开发、测试和打包，普通用户运行发布版不需要 Node.js。
 
 环境要求：Node.js 20+、Rust stable、Windows WebView2 Runtime。
 
 ```bash
 npm install
 npm run dev       # 浏览器预览
-npm run test      # 状态逻辑测试
-npm run build     # 前端静态构建
-npm run tauri dev # 桌面开发运行
+npm run test      # 运行状态逻辑测试
+npm run build     # 构建前端资源
+npm run tauri dev # 运行桌面开发版
 ```
 
-## 构建绿色版
+## 构建发布版
 
 ```bash
 npm run tauri build
 ```
 
-Tauri 默认会生成 NSIS 安装包。绿色版可从 `src-tauri/target/release/eyecare.exe` 和 `dist/` 资源整理为压缩包，推荐保留同目录的 `README.txt`。程序使用系统 Evergreen WebView2，不把运行时打进压缩包，因此体积较小；目标电脑需要预装 WebView2。对于未安装 WebView2 的机器，请使用官方 Evergreen Bootstrapper 或改用 NSIS 安装包的引导安装模式。
+Tauri 默认会生成 NSIS 安装包。绿色版可使用 `src-tauri/target/release/eyecare.exe` 配合 `dist/` 资源整理。程序使用系统 WebView2，不把运行时打进压缩包，因此发布包较小。
 
-应用不要求管理员权限。设置与统计当前保存在 WebView 的浏览器存储中；写入失败时会保留内存状态并提示用户。绿色版复制目录不会自动携带这份数据，正式发布时仍需将存储桥接到绿色目录旁的 `data/`，目录不可写时回退到 `%LOCALAPPDATA%\\EyeCare`。
+## 项目结构
 
-## 已实现
+- `src/`：TypeScript、界面逻辑、状态和测试
+- `src-tauri/`：Tauri/Rust 桌面能力、托盘和 Windows 原生提醒
+- `public/`：桌面遮挡页和图标资源
+- `docs/screenshots/`：项目截图
 
-- 20-20-20、番茄护眼、自定义 1–180 分钟
-- 基于截止时间的计时，后台或睡眠唤醒后不会按秒漂移
-- 智能分级提醒：先显示角落卡片，再升级边缘光晕，最后显示多显示器右下角桌面卡片，全程不抢焦点
-- 托盘隐藏/恢复、关闭窗口隐藏到托盘
-- 设置和每日统计持久化（按本地日期切日，损坏数据会安全归一化）
-- 多显示器桌面提醒卡片、重复动作幂等及失败清理（不会锁住桌面操作）
-- 检测到全屏应用时自动顺延提醒，避免打断演示、游戏或视频
-- Windows 开机启动和前台全屏应用检测
-- 键盘 Escape、读屏 live region、减少动效偏好和窄窗口滚动支持
+## 许可证
 
-## 发布前检查
+本项目采用 **GNU General Public License v3.0-only (GPL-3.0-only)** 开源，完整协议见 [LICENSE](LICENSE)。
 
-需要在 Windows 真机验证：WebView2 缺失、锁屏/睡眠唤醒、多显示器和 DPI、全屏应用避让、非阻塞提醒不抢焦点、托盘单实例、复制绿色目录后运行，以及杀毒软件对未签名二进制的提示。
+## 反馈与贡献
+
+欢迎通过 [Issues](https://github.com/shayuye2010/EyeCare/issues) 报告问题或提出功能建议。提交问题时请尽量附上 Windows 版本、WebView2 版本、复现步骤和日志信息。
