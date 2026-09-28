@@ -230,7 +230,7 @@ async function restoreMainWindow(): Promise<boolean> {
 }
 
 async function restoreMainForReminder(): Promise<void> {
-  if (!mainHidden) return;
+  // Native minimization does not update the frontend's hidden flag.
   await restoreMainWindow();
 }
 
